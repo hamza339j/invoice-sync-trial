@@ -1,0 +1,56 @@
+name: deploy-invoice-sync
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: deploy-invoice-sync
+  cancel-in-progress: false
+
+env:
+  REGION: us-central1
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+          workload_identity_provider: ${{ vars.WIF_PROVIDER }}
+          service_account: ${{ vars.DEPLOYER_SA }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build and push image
+        run: |
+          set -euo pipefail
+          IMAGE="${REGION}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/invoice-sync/invoice-sync:${{ github.sha }}"
+          gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
+          docker build -t "$IMAGE" app/
+          docker push "$IMAGE"
+          echo "IMAGE=$IMAGE" >> "$GITHUB_ENV"
+
+      - name: Roll the Job image
+        run: |
+          set -euo pipefail
+          gcloud run jobs update "${{ vars.JOB_NAME }}" \
+            --region "$REGION" \
+            --image "$IMAGE"
+
+      - name: Execute the Job
+        run: |
+          set -euo pipefail
+          gcloud run jobs execute "${{ vars.JOB_NAME }}" --region "$REGION" --wait

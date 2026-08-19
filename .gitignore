@@ -1,0 +1,18 @@
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+!*.tfvars.example
+.terraform.lock.hcl
+override.tf
+override.tf.json
+
+# Never commit any GCP key (there shouldn't be one anyway — WIF is keyless)
+*-key.json
+*_key.json
+credentials.json
+gcp-*.json
+
+.DS_Store

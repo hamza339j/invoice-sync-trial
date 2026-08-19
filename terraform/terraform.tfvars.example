@@ -1,0 +1,5 @@
+project_id    = "hamza-ops-sandbox"
+region        = "us-central1"
+github_repo   = "hamza339j/invoice-sync-trial"
+github_branch = "main"
+alert_email   = "you@example.com"
