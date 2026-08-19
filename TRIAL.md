@@ -164,4 +164,24 @@ perimeter" — not "what should we do?"
 
 - Repository: `https://github.com/hamza339j/invoice-sync-trial.git`
 - Successful GitHub Actions run (WIF path): `https://github.com/hamza339j/invoice-sync-trial/actions/runs/32265697442`
-  alert email arrived at `hamzaafzal9909@gmail.com`.
+- Alert delivery evidence: the failure alert email arrived at
+  `hamzaafzal9909@gmail.com` — timestamp shown in the video.
+
+## Appendix — Terraform outputs (deployed, project `greef-506014`)
+
+```
+project_id                     = "greef-506014"
+job_name                       = "invoice-sync"
+runtime_service_account_email  = "invoice-sync-runtime@greef-506014.iam.gserviceaccount.com"
+deployer_service_account_email = "gh-deployer@greef-506014.iam.gserviceaccount.com"
+secret_id                      = "db-password"
+vpc_network                    = "projects/greef-506014/global/networks/invoice-sync-vpc"
+vpc_subnet                     = "projects/greef-506014/regions/us-central1/subnetworks/invoice-sync-subnet"
+workload_identity_pool_id      = "projects/936807486735/locations/global/workloadIdentityPools/github-pool"
+workload_identity_provider     = "projects/936807486735/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
+alert_policy_id                = "projects/greef-506014/alertPolicies/6120672162237508813"
+notification_channel_id        = "projects/greef-506014/notificationChannels/2710600389200518124"
+```
+
+(The VPC network/subnet outputs stand in for a "connector id" — this build uses
+Direct VPC egress instead of a Serverless VPC Access connector, justified in §5.)
