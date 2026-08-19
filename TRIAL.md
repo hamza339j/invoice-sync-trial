@@ -154,7 +154,7 @@ perimeter" — not "what should we do?"
 
 ## 8. Time spent and what I intentionally skipped
 
-- **Time:** ~[FILL IN] hours.
+- **Time:** ~6 hours.
 - **Skipped on purpose (sandbox, called out above):** VPC Service Controls
   perimeter, egress firewall rules, CMEK, Data Access audit-log sinks, org
   policies, and a real container image/app. All are the first things I'd add for
@@ -162,7 +162,6 @@ perimeter" — not "what should we do?"
 
 ## Links
 
-- Repository: `[FILL IN GitHub URL]`
-- Successful GitHub Actions run (WIF path): `[FILL IN run URL]`
-- Alert delivery evidence: see `[screenshot / video timestamp]` — the failure
-  alert email arrived at `[FILL IN timestamp]`.
+- Repository: `https://github.com/hamza339j/invoice-sync-trial.git`
+- Successful GitHub Actions run (WIF path): `https://github.com/hamza339j/invoice-sync-trial/actions/runs/32265697442`
+  alert email arrived at `hamzaafzal9909@gmail.com`.
